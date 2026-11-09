@@ -212,6 +212,8 @@ class AdjudicatorRequirementAssignment(models.Model):
 
 class AdjudicatorRequirementException(models.Model):
 
+    tournament = models.ForeignKey('tournaments.Tournament', models.CASCADE,
+        verbose_name=_("tournament"))
     institution = models.ForeignKey('participants.Institution', models.CASCADE,
         blank=True, null=True, verbose_name=_("institution"))
     team = models.ForeignKey('participants.Team', models.CASCADE,
@@ -220,8 +222,8 @@ class AdjudicatorRequirementException(models.Model):
 
     class Meta:
         constraints = [
-            UniqueConstraint(fields=['institution']),
-            UniqueConstraint(fields=['team']),
+            UniqueConstraint(fields=['institution', 'tournament']),
+            UniqueConstraint(fields=['team', 'tournament']),
         ]
         verbose_name = _("adjudicator requirement exception")
         verbose_name_plural = _("adjudicator requirement exceptions")
